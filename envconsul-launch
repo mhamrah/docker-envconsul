@@ -1,14 +1,16 @@
 #!/bin/sh
 
-ROUTE=$(route -n | grep 'UG[ \t ]' | awk '{print $2}')
-CONSUL=${ROUTE}:8500
+if [ -z "$CONSUL" ]; then
+  ROUTE=$(route -n | grep 'UG[ \t ]' | awk '{print $2}')
+  CONSUL=${ROUTE}
+fi
 
-nc -z $ROUTE 8500
+nc -z $CONSUL 8500
 rc=$?
 
 if [ $rc != 0 ]; then
   echo "WARNING! Consul not available, running locally."
   $2
 else
-  /usr/bin/envconsul -consul=${CONSUL} -config /etc/envconsul-config.hcl $*
+  /usr/bin/envconsul -consul=${CONSUL}:8500 -config /etc/envconsul-config.hcl $*
 fi

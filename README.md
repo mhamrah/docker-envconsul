@@ -17,7 +17,7 @@ You can use ```envconsul-launch``` the same way as ```envconsul```. Command line
 ```envconsul-launch``` is set as the entrypoint, so you can simply pass in your key and command like so:
 
 ```
-docker run -i -t --rm mhamrah/enconsul CONSUL_KEY env
+docker run -i -t --rm mhamrah/envconsul CONSUL_KEY env
 ```
 
 
